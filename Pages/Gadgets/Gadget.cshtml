@@ -1,0 +1,53 @@
+@page "/all-gadgets"
+@model GadgetModel
+
+<div>
+    <a asp-page="./creategadget" class="btn btn-primary">Create New Gadget</a>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Type</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllGadgets)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.ProductName</td>
+                    <td>@item.Brand</td>
+                    <td>@item.Cost</td>
+                    <td>@item.Type</td>
+                    <td>
+                        <a href='@($"/edit/{item.Id}")' class="btn btn-primary">Edit</a> |
+                        <button type="button" onclick="deleteGadget(@item.Id)" class="btn btn-primary">delete
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="deleteGadgetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+           
+            <div class="modal-body">
+                <h4>Are you sure, you want to delete?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()" data-bs-dismiss="modal">Close</button>
+                <form method="POST" id="confirmDelete">
+                    <button type="submit"  class="btn btn-primary">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
